@@ -9,45 +9,63 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f9f9f9;
+    }
+
+    /* Main page background */
+    .main-page {
+      background: linear-gradient(to bottom, #fff5e6, #ffffff);
+      min-height: 100vh;
+      padding: 40px 20px;
       text-align: center;
     }
-    header {
+
+    h1 {
+      color: orange;
+      margin-bottom: 20px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .service {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .service:hover {
+      transform: translateY(-5px);
+    }
+
+    .footer {
+      margin-top: 30px;
+      padding: 20px;
       background: orange;
       color: white;
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
+      text-align: center;
     }
-    .catalogue {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 20px;
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 250px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: scale(1.05);
-    }
+
+    /* Modal styling */
     .modal {
       display: none;
       position: fixed;
-      z-index: 1;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
       overflow: auto;
-      padding-top: 60px;
+      transition: opacity 0.5s ease;
     }
+
     .modal-content {
       background: #fff;
       margin: auto;
@@ -55,225 +73,191 @@
       border-radius: 10px;
       width: 80%;
       max-width: 900px;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: all 0.5s ease-out;
     }
+
+    .modal.show .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
     .close {
       float: right;
       font-size: 28px;
-      font-weight: bold;
       cursor: pointer;
-      color: red;
+      color: #333;
     }
-    footer {
-      background: orange;
-      color: white;
-      padding: 15px;
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
       margin-top: 20px;
     }
-    video, img {
-      margin: 10px;
+
+    .gallery img, .gallery video {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 20px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
       border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .whatsapp-btn:hover {
+      background: #1ebe5d;
     }
   </style>
 </head>
 <body>
 
-<header>Creative Yug - Service Catalogue</header>
+  <div class="main-page">
+    <h1>Creative Yug - Service Catalogue</h1>
 
-<section class="catalogue">
-  <!-- Reels -->
-  <div class="card" onclick="openModal('reelsModal')">
-    <h3>Reels</h3>
-    <p>Engaging short-form videos for social media.</p>
+    <div class="services">
+      <div class="service" onclick="openModal('reelsModal')"> Reels</div>
+      <div class="service" onclick="openModal('carouselModal')"> Carousel Post</div>
+      <div class="service" onclick="openModal('logoModal')"> Logo</div>
+      <div class="service" onclick="openModal('smpModal')"> Social Media Post</div>
+      <div class="service" onclick="openModal('artModal')"> Art (Creative Images)</div>
+    </div>
+
+    <a class="whatsapp-btn" href="https://wa.me/9380747378" target="_blank">
+      💬 Chat on WhatsApp
+    </a>
   </div>
 
-  <!-- Carousel Post -->
-  <div class="card" onclick="openModal('carouselModal')">
-    <h3>Carousel Post</h3>
-    <p>Swipe-worthy carousel posts for better reach.</p>
+  <div class="footer">
+    <p>Follow us on Instagram: <b>@Creative_yug</b></p>
   </div>
 
-  <!-- Logo Design -->
-  <div class="card" onclick="openModal('logoModal')">
-    <h3>Logo Design</h3>
-    <p>Unique and creative logos for your brand.</p>
-  </div>
-
-  <!-- Art (Creative Images) -->
-  <div class="card" onclick="openModal('artModal')">
-    <h3>Art (Creative Images)</h3>
-    <p>Add some creativity to your story!</p>
-  </div>
-
-  <!-- Social Media Post -->
-  <div class="card" onclick="openModal('smpModal')">
-    <h3>Social Media Post</h3>
-    <p>Creative posts to engage your audience.</p>
-  </div>
-</section>
-
-<!-- Reels Modal -->
-<div id="reelsModal" class="modal">
+  <!-- Reels Modal -->
+  <div id="reelsModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('reelsModal')">&times;</span>
-      <h2>Sample Reels</h2>
-  
-      <!-- Reel 1 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-  
-      <!-- Reel 2 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 3 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel3.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 4 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel4.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-  
-      <!-- Reel 5 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel5.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 6 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel6.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 7 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel7.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 8 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel8.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 9 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel9.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <!-- Reel 10 -->
-      <video controls width="300" height="500" autoplay muted loop>
-        <source src="reel10.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+      <h2>Reels Samples</h2>
+      <div class="gallery">
+        <video controls><source src="reel1.mp4" type="video/mp4"></video>
+        <video controls><source src="reel2.mp4" type="video/mp4"></video>
+        <video controls><source src="reel3.mp4" type="video/mp4"></video>
+        <video controls><source src="reel4.mp4" type="video/mp4"></video>
+        <video controls><source src="reel5.mp4" type="video/mp4"></video>
+        <video controls><source src="reel6.mp4" type="video/mp4"></video>
+        <video controls><source src="reel7.mp4" type="video/mp4"></video>
+        <video controls><source src="reel8.mp4" type="video/mp4"></video>
+        <video controls><source src="reel9.mp4" type="video/mp4"></video>
+        <video controls><source src="reel10.mp4" type="video/mp4"></video>
+      </div>
     </div>
   </div>
 
-<!-- Carousel Post Modal -->
-<div id="carouselModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('carouselModal')">&times;</span>
-    <h2>Sample Carousel Posts</h2>
-    <img src="carousel1.jpeg" width="700">
-    <img src="carousel2.jpeg" width="700">
-    <img src="carousel3.jpeg" width="700">
-    <img src="carousel4.jpeg" width="700">
-     <img src="carousel5.jepg" width="700">
+  <!-- Carousel Modal -->
+  <div id="carouselModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('carouselModal')">&times;</span>
+      <h2>Carousel Post Samples</h2>
+      <div class="gallery">
+        <img src="carousel1.jpeg" alt="Carousel 1">
+        <img src="carousel2.jpeg" alt="Carousel 2">
+        <img src="carousel3.jpeg" alt="Carousel 3">
+        <img src="carousel4.jpeg" alt="Carousel 4">
+        <img src="carousel5.jpeg" alt="Carousel 5">
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Logo Modal -->
-<div id="logoModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('logoModal')">&times;</span>
-    <h2>Sample Logos</h2>
-    <img src="logo1.jpeg" width="250">
-    <img src="logo2.jpeg" width="250">
-    <img src="logo3.jpeg" width="250">
-    <img src="logo4.jpeg" width="250">
-    <img src="logo5.jpeg" width="250">
-    <img src="logo6.jpeg" width="250">
-    <img src="logo7.jpeg" width="250">
-    <img src="logo8.jpeg" width="250">
+  <!-- Logo Modal -->
+  <div id="logoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('logoModal')">&times;</span>
+      <h2>Logo Samples</h2>
+      <div class="gallery">
+        <img src="logo1.jpeg" alt="Logo 1">
+        <img src="logo2.jpeg" alt="Logo 2">
+        <img src="logo3.jpeg" alt="Logo 3">
+        <img src="logo4.jpeg" alt="Logo 4">
+        <img src="logo5.jpeg" alt="Logo 5">
+        <img src="logo6.jpeg" alt="Logo 6">
+        <img src="logo7.jpeg" alt="Logo 7">
+        <img src="logo8.jpeg" alt="Logo 8">
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Art Modal -->
-<div id="artModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('artModal')">&times;</span>
-    <h2>Samples Creative Images</h2>
-    <img src="art1.jpeg" width="250">
-    <img src="art2.jpeg" width="250">
-    <img src="art3.jpeg" width="250">
-    <img src="art4.jpeg" width="250">
-    <img src="art5.jpeg" width="250">
-    <img src="art6.jpeg" width="250">
-    <img src="art7.jpeg" width="250">
-    <img src="art8.jpeg" width="250">
-    <img src="art9.jpeg" width="250">
-    <img src="art10.jpeg" width="250">
-    <img src="art11.jpeg" width="250">
+  <!-- Social Media Post Modal -->
+  <div id="smpModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('smpModal')">&times;</span>
+      <h2>Social Media Post Samples</h2>
+      <div class="gallery">
+        <img src="smp1.jpeg" alt="Post 1">
+        <img src="smp2.jpeg" alt="Post 2">
+        <img src="smp3.jpeg" alt="Post 3">
+        <img src="smp4.jpeg" alt="Post 4">
+        <img src="smp5.jpeg" alt="Post 5">
+        <img src="smp6.jpeg" alt="Post 6">
+        <img src="smp7.jpeg" alt="Post 7">
+        <img src="smp8.jpeg" alt="Post 8">
+        <img src="smp9.jpeg" alt="Post 9">
+        <img src="smp10.jpeg" alt="Post 10">
+        <img src="smp11.jpeg" alt="Post 11">
+        <img src="smp12.jpeg" alt="Post 12">
+        <img src="smp13.jpeg" alt="Post 13">
+        <img src="smp14.jpeg" alt="Post 14">
+        <img src="smp15.jpeg" alt="Post 15">
+        <img src="smp16.jpeg" alt="Post 16">
+        <img src="smp17.jpeg" alt="Post 17">
+        <img src="smp18.jpeg" alt="Post 18">
+        <img src="smp19.jpeg" alt="Post 19">   
+        <img src="smp22.jpeg" alt="Post 21">
+        <img src="smp23.jpeg" alt="Post 22">
+        <img src="smp24.jpeg" alt="Post 23">
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Social Media Post Modal -->
-<div id="smpModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('smpModal')">&times;</span>
-    <h2>Sample Social Media Posts</h2>
-    <img src="smp1.jpeg" width="250">
-    <img src="smp2.jpeg" width="250">
-    <img src="smp3.jpeg" width="250">
-    <img src="smp4.jpeg" width="250">
-    <img src="smp5.jpeg" width="250">
-    <img src="smp6.jpeg" width="250">
-    <img src="smp7.jpeg" width="250">
-    <img src="smp8.jpeg" width="250">
-    <img src="smp9.jpeg" width="250">
-    <img src="smp10.jpeg" width="250">
-    <img src="smp11.jpeg" width="250">
-    <img src="smp12.jpeg" width="250">
-    <img src="smp13.jpeg" width="250">
-    <img src="smp14.jpeg" width="250">
-    <img src="smp15.jpeg" width="250">
-    <img src="smp16.jpeg" width="250">
-    <img src="smp17.jpeg" width="250">
-    <img src="smp18.jpeg" width="250">
-    <img src="smp19.jpeg" width="250">
-    <img src="smp22.jpeg" width="250">
-    <img src="smp23.jpeg" width="250">
-    <img src="smp24.jpeg" width="250">
+  <!-- Art Modal -->
+  <div id="artModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('artModal')">&times;</span>
+      <h2>Art / Creative Image Samples</h2>
+      <div class="gallery">
+        <img src="art1.jpeg" alt="Art 1">
+        <img src="art2.jpeg" alt="Art 2">
+        <img src="art3.jpeg" alt="Art 3">
+        <img src="art4.jpeg" alt="Art 4">
+        <img src="art5.jpeg" alt="Art 5">
+        <img src="art6.jpeg" alt="Art 6">
+        <img src="art7.jpeg" alt="Art 7">
+        <img src="art8.jpeg" alt="Art 8">
+        <img src="art9.jpeg" alt="Art 9">
+        <img src="art10.jpeg" alt="Art 10">
+        <img src="art11.jpeg" alt="Art 11">
+      </div>
+    </div>
   </div>
-</div>
 
-<footer>
-  Contact us on Instagram: <b>@Creative_yug</b> | WhatsApp: <b>9380747378</b>
-</footer>
-
-<script>
-function openModal(id) {
-  document.getElementById(id).style.display = "block";
-}
-function closeModal(id) {
-  document.getElementById(id).style.display = "none";
-}
-</script>
-
+  <script>
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      modal.style.display = "block";
+      setTimeout(() => modal.classList.add("show"), 10);
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.remove("show");
+      setTimeout(() => { modal.style.display = "none"; }, 500);
+    }
+  </script>
 </body>
-
 </html>
-
-
-
-
